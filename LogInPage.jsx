@@ -6,6 +6,8 @@ import loginimage from './CSS/images/login-image.svg'
 // import loginImg from './Images/login_image.jpg'
 // import poweredBy from './Images/powered_by-vue.jpg'
 import LoadingBar from 'react-top-loading-bar'
+import { useNavigate } from 'react-router'
+
 
 
 
@@ -17,7 +19,9 @@ const LogInPage = () => {
     const [userData, setUserData] = useState([]);
     const [selectedName, setSelectedName] = useState('');
 
-    const [progress, setProgress] = useState(0);
+   
+    const navigate = useNavigate();
+    
 
     const handelInputChange = (e) => {
         const { name, value } = e.target;
@@ -46,12 +50,7 @@ const LogInPage = () => {
         sessionStorage.setItem('password', data.password);
     }
 
-    const handleLogout = () => {
-        // Clear session storage and reset the data state
-        sessionStorage.removeItem('username');
-        sessionStorage.removeItem('password');
-        setData({ username: '', password: '' });
-      };
+  
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -62,9 +61,9 @@ const LogInPage = () => {
         } else if (!data.password) {
             alert('Paasword is empty.');
         } else {
+            setInterval(()=>{})
             handleButton(); // Call your custom function to handle the form data
-            setProgress(100)
-            
+            navigate('/homepage',{state:{name:`${data.username}`}})
         }
     };
 
@@ -72,11 +71,6 @@ const LogInPage = () => {
     // console.log(userData)
     return (
         <>
-            <LoadingBar
-                color='#f11946'
-                progress={progress}
-                // onLoaderFinished={() => setProgress(0)}
-            />
             <main className="height-100vh body">
                 <section className="w-100 p-0 m-0 h-100">
                     <div className="login-row-div" >
@@ -137,6 +131,7 @@ const LogInPage = () => {
                                     <button onClick={handleButton} type="submit" className="btn-primary-green form-submit-btn">
                                         Login
                                     </button>
+                                    {/* <button onClick={handleLogout} className='btn-primary-green form-submit-btn'>LogOut</button> */}
                                     {/* Add error handling logic as needed */}
                                 </form>
                             </div>
